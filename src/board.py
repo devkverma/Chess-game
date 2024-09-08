@@ -23,8 +23,31 @@ class Board:
             start = row + piece.dir
             end = row + (piece.dir*(1+steps))
             for move_row in range(start,end,piece.dir):
-                pass
+                if Square.in_range(move_row):
+                    if self.squares[move_row][col].isempty():
+                        # create initial and final move squares
+                        initial = Square(row,col)
+                        final = Square(move_row,col)
+                        #create new move
+                        move = Move(initial,final)
+                        piece.add_move(move)
+                    # blocked
+                    else: break
+                # not in range
+                else: break
+
             # diagonal moves
+            move_rows = row + piece.dir
+            move_cols = [col-1,col+1]
+            for move_col in move_cols:
+                if Square.in_range(move_rows,move_col):
+                    if self.squares[move_rows][move_col].has_rival_piece(piece.color):
+                        # create initial and final move squares
+                        initial = Square(row,col)
+                        final = Square(move_row,move_col)
+                        # create a new move
+                        move = Move(initial,final)
+
 
 
         def knight_moves():
